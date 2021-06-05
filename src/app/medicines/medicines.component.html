@@ -1,0 +1,40 @@
+<div class="m-3">
+  <h3>Lekovi</h3>
+  <div class="wrap">
+    <div class="search">
+      <input type="text" name="name" [(ngModel)]="name" (ngModelChange)="search()"  class="searchTerm" placeholder="">
+    </div>
+  </div>
+
+</div>
+
+
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th scope="row" (click)="sort('id')">#</th>
+    <th scope="row" (click)="sort('code')">Šifra</th>
+    <th scope="row" (click)="sort('name')">Ime</th>
+    <th scope="row" (click)="sort('type')">Vrsta</th>
+    <th scope="row" (click)="sort('shape')">Oblik</th>
+    <th scope="row" (click)="sort('composition')">Sastav</th>
+    <th scope="row" (click)="sort('manufacturer')">Proizvođač</th>
+    <th scope="col">#</th>
+  </tr>
+  </thead>
+  <tbody>
+
+  <tr *ngFor="let medicine of medicines | orderBy: key: reverse" >
+    <th scope="row">{{ medicine.id }}</th>
+    <td>{{ medicine.code }}</td>
+    <td>{{ medicine.name}}</td>
+    <td>{{ medicine.type}}</td>
+    <td>{{ medicine.shape}}</td>
+    <td>{{ medicine.composition}}</td>
+    <td>{{ medicine.manufacturer}}</td>
+    <td>
+      <button class="btn btn-primary" (click)="addAllergy(medicine)">Dodaj alergiju</button>
+    </td>
+  </tr>
+  </tbody>
+</table>

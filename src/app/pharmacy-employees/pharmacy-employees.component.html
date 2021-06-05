@@ -1,0 +1,358 @@
+<div style="text-align: center;"><h2>Zaposleni apoteke</h2></div>
+<br><br>
+<button class="btn btn-primary"  style="margin-right: 10px;" (click)="phaList()">Prikazi farmaceute</button>
+
+<button class="btn btn-primary"  style="margin-right: 10px;" (click)="dermaList()">Prikazi dermatologe</button>
+<br><br>
+<button class="btn btn-primary"  style="margin-right: 10px;" (click)="addPharmacist()">Dodaj farmaceuta u apoteku</button>
+
+<button class="btn btn-primary"  style="margin-right: 10px;" (click)="addDermatologist()">Dodaj dermatologa u apoteku</button>
+
+<div *ngIf="showAddPharma">
+  <br>
+  <div style="text-align: center;"><h3>Dodavanje farmaceuta u apoteku</h3></div>
+  <br>
+  <button class="btn btn-primary" (click)="showRegisterNewPharma = !showRegisterNewPharma">Registruj novog farmaceuta</button>
+  <br>
+  <div *ngIf="showRegisterNewPharma">
+    <br>
+    <form
+      name="form"
+      #f="ngForm"
+      novalidate
+    >
+      <div class="form-group">
+        <label>Ime</label>
+        <input
+          type="text"
+          class="form-control"
+          name="firstName"
+          [(ngModel)]="form.firstName"
+          required
+          #firstName="ngModel"
+        />
+        <div class="alert-danger" *ngIf="f.submitted && firstName.invalid">
+          <div *ngIf="firstName.errors.required">Ime je obavezno</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Prezime</label>
+        <input
+          type="text"
+          class="form-control"
+          name="lastName"
+          [(ngModel)]="form.lastName"
+          required
+          #lastName="ngModel"
+        />
+        <div class="alert-danger" *ngIf="f.submitted && lastName.invalid">
+          <div *ngIf="lastName.errors.required">Prezime je obavezno</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label >Email</label>
+        <input
+          type="email"
+          class="form-control"
+          name="email"
+          [(ngModel)]="form.email"
+          required
+          email
+          #email="ngModel"
+        />
+        <div class="alert-danger" *ngIf="f.submitted && email.invalid">
+          <div *ngIf="email.errors.required">Email is required</div>
+          <div *ngIf="email.errors.email">
+            Email must be a valid email address
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Korisnicko ime</label>
+        <input
+          type="text"
+          class="form-control"
+          name="username"
+          [(ngModel)]="form.username"
+          required
+          minlength="3"
+          maxlength="20"
+          #username="ngModel"
+        />
+        <div class="alert-danger" *ngIf="f.submitted && username.invalid">
+          <div *ngIf="username.errors.required">Username is required</div>
+          <div *ngIf="username.errors.minlength">
+            Username must be at least 3 characters
+          </div>
+          <div *ngIf="username.errors.maxlength">
+            Username must be at most 20 characters
+          </div>
+        </div>
+      </div>
+      Definisanje radnog vremena za farmaceuta:<br>
+      <select  [(ngModel)]="selectedDay" name="selectedDay" >
+        <option selected> Svaki dan</option>
+        <option > Pondedeljak</option>
+        <option > Utorak</option>
+        <option > Sreda</option>
+        <option > Cetvrtak</option>
+        <option > Petak</option>
+        <option > Subota</option>
+        <option > Radni dani</option>
+        <option > Nedelja</option>
+        <option > Vikend</option>
+      </select>
+      <Br>
+      <label>Radno vreme pocetak: </label>
+      <input
+        type="time"
+        class="form-control"
+        name="startTime"
+        [(ngModel)]="form.startTime"
+        required
+      />
+      <label>Radno vreme kraj: </label>
+      <input
+        type="time"
+        class="form-control"
+        name="startTime"
+        [(ngModel)]="form.endTime"
+        required
+      />
+
+      <button class="btn btn-primary"  (click)="registerNewPharmacist(form)">Registruj</button>
+
+    </form>
+    <br>
+  </div>
+
+  <div *ngIf="showMessageNoPharma" style="text-align: center;">
+    <p>Nema slobodnih famraceuta</p>
+  </div>
+  <div *ngIf="!showMessageNoPharma">
+    <br>
+
+    <Br>
+    <Br>
+
+    <br>
+
+
+    <div *ngIf="defineWO">
+      Definisanje radnog vremena za farmaceuta: {{pharmacist?.firstName}}
+      <form>
+        <select  [(ngModel)]="selectedDay" name="selectedDay" >
+          <option selected> Svaki dan</option>
+          <option > Pondedeljak</option>
+          <option > Utorak</option>
+          <option > Sreda</option>
+          <option > Cetvrtak</option>
+          <option > Petak</option>
+          <option > Subota</option>
+          <option > Radni dani</option>
+          <option > Nedelja</option>
+          <option > Vikend</option>
+        </select>
+        <Br>
+        <label>Radno vreme pocetak: </label>
+        <input
+          type="time"
+          class="form-control"
+          name="startTime"
+          [(ngModel)]="form.startTime"
+          required
+        />
+        <label>Radno vreme kraj: </label>
+        <input
+          type="time"
+          class="form-control"
+          name="startTime"
+          [(ngModel)]="form.endTime"
+          required
+        />
+        <button class="btn btn-primary" (click)="addToPharmacyPharmacist(pharmacist,form)">Definisi i dodaj</button>
+
+      </form>
+      <br>
+      <br>
+    </div>
+
+    <p>Lista registrovanih farmaceuta</p>
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th scope="row" >#</th>
+        <th scope="row" >Ime</th>
+        <th scope="row" >Prezime</th>
+        <th scope="row" >Ocena</th>
+        <th scope="col">#</th>
+      </tr>
+      </thead>
+      <tbody>
+
+      <tr *ngFor="let pharmacist of pharmacists | orderBy: key: reverse" >
+        <th scope="row">{{ pharmacist.id }}</th>
+        <td>{{ pharmacist.firstName }}</td>
+        <td>{{ pharmacist.lastName}}</td>
+        <td>{{ pharmacist.evaluationGrade}}</td>
+        <td>
+          <button class="btn btn-primary" (click)="defineWorkingHours(pharmacist)">Dodaj</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div *ngIf="showAddDerma">
+  <br>
+  <div style="text-align: center;"><h3>Dodavanje dermatologa u apoteku</h3></div>
+  <br>
+
+  <div *ngIf="showMessageNoDerma" style="text-align: center;">
+    <p>Nema slobodnih dermatologa koji nisu vec zaposleni kod Vas</p>
+  </div>
+
+  <div *ngIf="!showMessageNoDerma">
+      <br>
+      <Br>
+      <p>Lista registrovanik dermatologa</p>
+      <Br>
+
+    <div *ngIf="showDermaAddingWO">
+
+      <div *ngIf="workingHoursEmpty">
+        <p>Ovaj dermatolog nema nijedno definisano radno vreme!</p>
+      </div>
+      <div *ngIf="!workingHoursEmpty">
+        <p>Ovaj dermatolog ima vec neka definisana radna vremena!</p>
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th scope="row" >#</th>
+            <th scope="row" >pocetak</th>
+            <th scope="row" >kraj</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let workingHours of workingHoursDermatologist ">
+            <td>{{ workingHours.workDay }}</td>
+            <td>{{ workingHours.startTime}}</td>
+            <td>{{ workingHours.endTime}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <br>
+      Definisanje radnog vremena za dermatologa: {{dermatologist?.firstName}} <br>
+
+      <form>
+        <select  [(ngModel)]="selectedDay" name="selectedDay" >
+          <option selected> Svaki dan</option>
+          <option > Pondedeljak</option>
+          <option > Utorak</option>
+          <option > Sreda</option>
+          <option > Cetvrtak</option>
+          <option > Petak</option>
+          <option > Subota</option>
+          <option > Radni dani</option>
+          <option > Nedelja</option>
+          <option > Vikend</option>
+        </select>
+        <Br>
+        <label>Radno vreme pocetak: </label>
+        <input
+          type="time"
+          class="form-control"
+          name="startTime"
+          [(ngModel)]="form.startTime"
+          required
+        />
+        <label>Radno vreme kraj: </label>
+        <input
+          type="time"
+          class="form-control"
+          name="startTime"
+          [(ngModel)]="form.endTime"
+          required
+        />
+      </form>
+      <button class="btn btn-primary" (click)="addToPharmacyDermatologist(dermatologist,form)">Definisi i dodaj</button>
+
+      <br>
+    </div>
+
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th scope="row" >#</th>
+        <th scope="row" >Ime</th>
+        <th scope="row" >Prezime</th>
+        <th scope="row" >Ocena</th>
+        <th scope="col">#</th>
+      </tr>
+      </thead>
+      <tbody>
+
+      <tr *ngFor="let dermatologist of dermatologists | orderBy: key: reverse" >
+        <th scope="row">{{ dermatologist.id }}</th>
+        <td>{{ dermatologist.firstName }}</td>
+        <td>{{ dermatologist.lastName}}</td>
+        <td>{{ dermatologist.evaluationGrade}}</td>
+        <td>
+          <button class="btn btn-primary" (click)="defineWorkingHoursDerma(dermatologist)">Dodaj</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <br>
+</div>
+
+
+
+<div *ngIf="buttonPress">
+  <br>
+  <div style="text-align: center;">   <h2> {{this?.naziv}} </h2> </div>
+  <div class="wrap">
+    <div class="search">
+      Pretraga:
+      <input type="text" name="name" [(ngModel)]="name" (ngModelChange)="search()"  class="searchTerm" placeholder="">
+    </div>
+  </div>
+  <div class="m-3">
+    <div class="wrap">
+      <div class="search">
+        Pretraga po ocenama:
+        <input type="number" min="0" max='10' name="name"  [(ngModel)]="lowerGrade" (ngModelChange)="filterEvaluationGrade()"  class="searchTerm" placeholder="">
+      </div>
+    </div>
+  </div>
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th scope="row" (click)="sort('id')">#</th>
+      <th scope="row" (click)="sort('name')">Ime</th>
+      <th scope="row" (click)="sort('surname')">Prezime</th>
+      <th scope="row" (click)="sort('grade')">Ocena</th>
+      <th scope="col">#</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    <tr *ngFor="let emp of employees | orderBy: key: reverse" >
+      <th scope="row">{{ emp.id }}</th>
+      <td>{{ emp.firstName }}</td>
+      <td>{{ emp.lastName}}</td>
+      <td>{{ emp.evaluationGrade}}</td>
+      <td>
+        <button class="btn btn-primary" (click)="deleteEmp(emp)">Ukloni</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>

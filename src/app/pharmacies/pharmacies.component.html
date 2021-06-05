@@ -1,0 +1,46 @@
+<div class="m-3">
+  <h3>Apoteke</h3>
+  <div class="wrap">
+    <div class="search">
+      <input type="text" name="name" [(ngModel)]="name" (ngModelChange)="search()"  class="searchTerm" placeholder="">
+    </div>
+  </div>
+
+</div>
+
+
+<div class="m-3">
+  <div class="wrap">
+    <div class="search">
+      <input type="number" min="0" max='10' name="name"  [(ngModel)]="lowerGrade" (ngModelChange)="filterEvaluationGrade()"  class="searchTerm" placeholder="">
+    </div>
+  </div>
+</div>
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th scope="row" (click)="sort('id')" >#</th>
+    <th scope="row" (click)="sort('name')" >Ime</th>
+    <th scope="row" (click)="sort('country')" scope="col">Država</th>
+    <th scope="row" (click)="sort('city')" scope="col">Grad</th>
+    <th scope="row" (click)="sort('address')" scope="col">Adresa apoteke</th>
+    <th scope="row" (click)="sort('pharmacyDescription')" scope="col">Opis apoteke</th>
+    <th scope="row" (click)="sort('evaluationGrade')" scope="col">Ocena apoteke</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let pharmacy of pharmacies | orderBy: key: reverse " >
+    <th scope="row" >{{ pharmacy.id }}</th>
+    <td>
+      <a [routerLink]="['/pharmacy', pharmacy.id]">
+      {{ pharmacy.name }}
+      </a>
+    </td>
+    <td>{{ pharmacy.country }}</td>
+    <td>{{ pharmacy.city}}</td>
+    <td>{{ pharmacy.address}}</td>
+    <td>{{ pharmacy.pharmacyDescription}}</td>
+    <td>{{ pharmacy.evaluationGrade}}</td>
+  </tr>
+  </tbody>
+</table>

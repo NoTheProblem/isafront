@@ -1,0 +1,80 @@
+<div style="text-align: center;"><h2>Cenovnik lekova Apoteke</h2></div>
+<div *ngIf="!show">
+  <div class="m-3">
+    <div class="wrap">
+      <div class="search">
+        Pretrazite lek koji vam treba:
+        <input type="text" name="name" [(ngModel)]="name" (ngModelChange)="search()"  class="searchTerm" placeholder="">
+      </div>
+    </div>
+
+  </div>
+
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th scope="row">#</th>
+      <th scope="row">Šifra</th>
+      <th scope="row">Ime</th>
+      <th scope="col">#</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    <tr *ngFor="let medicine of medicines" >
+      <th scope="row">{{ medicine.id }}</th>
+      <td>{{ medicine.code }}</td>
+      <td>{{ medicine.name}}</td>
+      <td>
+        <button class="btn btn-primary" (click)="getMedicine(medicine,medicine.id)">Izmeni cenu</button>
+      </td>
+    </tr>
+    </tbody>
+
+  </table>
+</div>
+
+<div *ngIf="show">
+
+  <label> Kod leka:  {{medPrice?.medicine?.code}}</label>
+  <Br>
+  <label> Ime leka:  {{medPrice?.medicine?.name}}</label>
+
+  <div *ngIf="medPrice?.price!==-1">
+    Ovaj lek vec ima cenu koja vazi od: {{medPrice?.startDate | date:'longDate'}}
+    <br>
+    i cena mu je {{medPrice?.price}}
+  </div>
+
+
+  <form
+    *ngIf="!isSuccessful"
+    name="form"
+    (ngSubmit)="f.form.valid && updateMedicinePrice()"
+    #f="ngForm"
+    novalidate
+  >
+    <br>
+    Nova cena leka:
+    <input type="number" name ="price" [(ngModel)]="form.price" >
+    <br>
+    <br>
+    Datum pocetka vazenja cena:
+    <input
+      type="date"
+      class="form-control"
+      name="startDate"
+      [(ngModel)]="form.startDate"
+      required
+    />
+    <br>
+    <p>Nova cena leka ostaje dok ne zadate novu cenu leku</p>
+    <br>
+    <div class="alert alert-warning" *ngIf="isSubmitFailed">
+      Dodavanje cene nije uspelo, popunite polja validno<br/>
+    </div>
+  </form>
+  <button class="btn btn-primary"  (click)="updateMedicinePrice(form)">Dodaj cenu</button>
+
+
+</div>

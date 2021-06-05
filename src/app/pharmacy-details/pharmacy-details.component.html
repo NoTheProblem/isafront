@@ -1,0 +1,87 @@
+<div style="text-align: center;"><h2>Detalji apoteke</h2> </div>
+
+<div>
+  Naziv apoteke: <b>{{pharmacy?.name}}</b>  <br>
+  Prosecna ocena apoteke: <b> {{pharmacy?.evaluationGrade}} </b>
+  <br>
+  Adresa apoteke: <b> {{pharmacy?.address}} </b>
+  <button class="btn btn-primary" (click)="showMap=!showMap">Pokazi na mapi</button>
+  <div *ngIf="showMap">
+    <app-map [adresa]="adresa" > </app-map>
+  </div>
+  <br><br>
+  <button class="btn btn-primary" style="margin-right: 10px;" (click)="showAvailableMedicines()">Prikazi lekove koje apoteka ima</button>
+
+  <button class="btn btn-primary" style="margin-right: 10px;" (click)="showAvailableExaminations()">Prikazi termine kod dermatologa</button>
+  <br>
+
+  <div *ngIf="isLoggedIn">
+    <br>
+    <button class="btn btn-primary" style="margin-right: 10px;">Rezervisi lek</button>
+    <button class="btn btn-primary" style="margin-right: 10px;" (click)="checkEPerscription()">Dostupnost leka (E-Recept)</button>
+    <br>
+    <br>
+    <button class="btn btn-primary" style="margin-right: 10px;">Zakazi savetovanje kod farmaceuta</button>
+    <button class="btn btn-primary" style="margin-right: 10px;">Zakazi pregled kod dermatologa</button>
+    <button class="btn btn-primary" style="margin-right: 10px;"  (click)="subscribeToPromotions()">Pretplati se na akcije/promocije</button>
+  </div>
+
+</div>
+
+<div *ngIf="showMedicines">
+  <br><br>
+  <h2>Prikaz lekova na stanju</h2>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="row">#</th>
+        <th scope="row">Šifra</th>
+        <th scope="row">Ime</th>
+        <th scope="row">Vrsta</th>
+        <th scope="row">Oblik</th>
+        <th scope="row">Sastav</th>
+        <th scope="row">Proizvođač</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let medicine of medicines ">
+        <th scope="row">{{ medicine.id }}</th>
+        <td>{{ medicine.code }}</td>
+        <td>{{ medicine.name}}</td>
+        <td>{{ medicine.type}}</td>
+        <td>{{ medicine.shape}}</td>
+        <td>{{ medicine.composition}}</td>
+        <td>{{ medicine.manufacturer}}</td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+
+<div *ngIf="showExaminations">
+  <br><br>
+  <h2>Prikaz slobodnih termina kod dermatologa</h2>
+
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th scope="row">#</th>
+      <th scope="row">Dermatolog</th>
+      <th scope="row">Cena</th>
+      <th scope="row">Datum</th>
+      <th scope="row">Trajanje</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let examination of examinations  ">
+      <th scope="row">{{ examination.id }}</th>
+      <td>{{ examination.dermatologistName }} {{examination.dermatologistLastname}}</td>
+      <td>{{ examination.price}}</td>
+      <td>{{ examination.date | date:'longDate'}}</td>
+      <td>{{ examination.durationMinutes}}</td>
+    </tr>
+    </tbody>
+  </table>
+
+</div>

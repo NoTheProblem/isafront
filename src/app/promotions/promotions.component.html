@@ -1,0 +1,133 @@
+<div style="text-align: center;">
+  <h2>  Akcije/Promocije</h2>
+</div>
+
+<div class="m-3" style="text-align: center;">
+    <button class="btn btn-primary"  *ngIf="isShown" (click)="toggle()" >Dodaj novu akciju/promociju</button>
+    <button class="btn btn-primary" *ngIf="!isShown"  (click)="toggle()" >Prikazi sve akcije/promocije</button>
+</div>
+
+<div *ngIf="!isShown" class="row container-fluid"  id="divshow1">
+
+  <div>
+    <form
+      *ngIf="!isSuccessful"
+      name="form"
+      (ngSubmit)="f.form.valid && onSubmit()"
+      #f="ngForm"
+      novalidate
+    >
+
+      <div class="form-group">
+        <label for="title">Naziv Akcije/Promocije</label>
+        <input
+          type="text"
+          class="form-control"
+          name="title"
+          [(ngModel)]="form.title"
+          required
+          #title="ngModel"
+        />
+        <div class="alert-danger" *ngIf="f.submitted && title.invalid">
+          <div *ngIf="title.errors.required">Naziv je obavezan</div>
+        </div>
+      </div>
+
+
+      <div class="form-group">
+        <label for="text">Opis Akcije/Promocije</label>
+        <input
+          type="text"
+          class="form-control"
+          name="text"
+          [(ngModel)]="form.text"
+          required
+          #text="ngModel"
+        />
+        <div class="alert-danger" *ngIf="f.submitted && text.invalid">
+          <div *ngIf="text.errors.required">Opis je obavezan</div>
+        </div>
+      </div>
+
+
+      <div class="form-group">
+        <label for="type">Tip</label>
+        <input type="radio" value="akcija" name="type" [(ngModel)]="form.type"> Akcija
+        <input type="radio" value="promocija" name="type" [(ngModel)]="form.type"> Promocija
+      </div>
+
+
+      <div class="form-group">
+        <label for="startDate">Datum pocetka vazenja</label>
+        <input
+          type="date"
+          class="form-control"
+          name="startDate"
+          [(ngModel)]="form.startDate"
+          required
+          #startDate="ngModel"
+        />
+
+        <div class="alert-danger" *ngIf="f.submitted && startDate.invalid">
+          <div *ngIf="startDate.errors.required">Pocetni datum je obavezan</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="endDate">Datum kraja vazenja</label>
+        <input
+          type="date"
+          class="form-control"
+          name="endDate"
+          [(ngModel)]="form.endDate"
+          required
+          #endDate="ngModel"
+        />
+
+        <div class="alert-danger" *ngIf="f.submitted && endDate.invalid">
+          <div *ngIf="endDate.errors.required">Krajnji datum je obavezan</div>
+        </div>
+      </div>
+
+      <div *ngIf="showError">
+        <p style="color:red;"> Niste dobro popunili formu </p>
+      </div>
+
+      <div class="form-group">
+        <button class="btn btn-primary btn-block" >Napravi akciju/promociju</button>
+      </div>
+
+
+    </form>
+  </div>
+</div>
+
+
+
+
+<div *ngIf="isShown" class="row container-fluid"  id="divshow">
+  <table class="table table-striped" >
+    <thead>
+    <tr>
+      <th scope="row">#</th>
+      <th scope="row">Naziv</th>
+      <th scope="row">Opis</th>
+      <th scope="row">Tip</th>
+      <th scope="row">Datum pocetka vazenja</th>
+      <th scope="row">Datum kraja vazenja</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr *ngFor="let promotion of promotions" >
+      <th scope="row">{{ promotion.id }}</th>
+      <td>{{ promotion.title }}</td>
+      <td>{{ promotion.text}}</td>
+      <td>{{ promotion.type}}</td>
+      <td>{{ promotion.startDate | date}}</td>
+      <td>{{ promotion.endDate | date}}</td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+

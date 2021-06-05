@@ -1,0 +1,74 @@
+<h3>Detalji porudzbine</h3>
+<div *ngIf="!status">
+  ID porudzbine: {{order?.id}} <br>
+  Datum kreiranja: {{order?.createDate | date:'longDate'}} <Br>
+  Rok za predaju ponuda: {{order?.endDate | date:'longDate'}} <br>
+  <button class="btn btn-primary btn-block" *ngIf="updatable" (click)="showUpdate=true">Izmeni porudzbenicu</button>
+  <button class="btn btn-primary btn-block" *ngIf="updatable" (click)="deleteOrder()">Obrisi porudzbenicu</button>
+  <button class="btn btn-primary btn-block" (click)="showBids=!showBids; isValidForDecision()" >Prikazi pristigle ponude</button>
+</div>
+<div *ngIf="status">
+  Za ovu porudzbinu je vec odabrana ponuda <Br>
+  ID porudzbine: {{order?.id}} <br>
+  Datum kreiranja: {{order?.createDate | date:'longDate'}} <Br>
+  Rok za predaju robe: {{order?.endDate | date:'longDate'}} <br>
+  Cena: {{order?.price}}
+</div>
+
+
+
+
+<div *ngIf="showBids">
+  <h2>Pristigle ponude </h2>
+  <div *ngIf="decision">
+    Rok za predaju ponuda je istekao, ukoliko ste Vi kreirali ovu porudzbenicu mozete odabradi.
+  </div>
+  <table class="table table-striped" >
+    <thead>
+    <tr>
+      <th scope="row">#</th>
+      <th scope="row">Ime dobavljaca</th>
+      <th scope="row">Datum isporuke</th>
+      <th scope="row">Cena</th>
+      <th scope="row" *ngIf="decision">Odaberi</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr *ngFor="let b of bids" >
+      <th scope="row">{{ b.id }}</th>
+      <td>{{ b.supplier.username}}</td>
+      <td>{{ b.endDate | date:'longDate' }}</td>
+      <td>{{ b.price }}</td>
+      <th scope="row" *ngIf="decision">
+        <button class="btn btn-primary btn-block" (click)="confirm(b)" >Odaberi ponudu</button>
+      </th>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<div *ngIf="showUpdate">
+
+  <form>
+
+  <div class="form-group">
+    <label>Nov datum roka za ponude</label>
+    <input
+      type="date"
+      class="form-control"
+      name="endDate"
+      [(ngModel)]="form.endDate"
+      required
+      #endDate="ngModel"
+    />
+    <div class="alert-danger" *ngIf="endDate.invalid">
+      <div *ngIf="endDate.errors.required">Datum roka za ponude je obavezan</div>
+    </div>
+
+    <button class="btn btn-primary btn-block" (click)="updateOrder(form)" >Odaberi ponudu</button>
+
+
+  </div>
+  </form>
+</div>

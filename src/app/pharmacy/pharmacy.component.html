@@ -1,0 +1,90 @@
+<div style="text-align: center;"><h2>Profil apoteke</h2> </div>
+
+<div>
+  Naziv apoteke: <b>{{pharmacy?.name}}</b>
+  <br>
+  Adresa apoteke: <b> {{pharmacy?.address}}, {{pharmacy?.city}} </b>
+  <button class="btn btn-primary" (click)="showMap=!showMap">Pokazi na mapi</button>
+  <div *ngIf="showMap">
+    <app-map [adresa]="adresa" > </app-map>
+  </div>
+  <br>
+  Cena savetovanja: {{pharmacy?.counselingPrice}}
+  <br>
+  Opis apoteke: <b> {{pharmacy?.pharmacyDescription}}</b>
+  <br><Br>
+  <button class="btn btn-primary"  style="margin-right: 10px;" (click)="update=!update">Uredi podatke o apoteci</button>
+  <br><Br>
+
+</div>
+
+<div *ngIf="update">
+  <br>
+  Uputstvo: Ostavite prazna polja koja ne zelite da menjate!
+  <br><br>
+  <form
+    *ngIf="!isSuccessful"
+    name="form"
+    (ngSubmit)="f.form.valid && azuriraj(form)"
+    #f="ngForm"
+    novalidate
+  >
+    <div class="form-group">
+      <label>Novi naziv apoteke</label>
+      <input
+        type="text"
+        class="form-control"
+        name="name"
+        [(ngModel)]="form.name"
+        [value]="pharmacy?.name"
+        #name="ngModel"
+      />
+      <div class="alert-danger" *ngIf="f.submitted && name.invalid">
+        <div *ngIf="name.errors.required">Opis je obavezan</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Novi opis apoteke</label>
+      <input
+        type="text"
+        class="form-control"
+        name="pharmacyDescription"
+        [(ngModel)]="form.pharmacyDescription"
+        required
+        #pharmacyDescription="ngModel"
+      />
+    </div>
+
+    <div class="form-group">
+      <label>Nova cena pregleda</label>
+      <input
+        type="text"
+        class="form-control"
+        name="counselingPrice"
+        [(ngModel)]="form.counselingPrice"
+        required
+        #counselingPrice="ngModel"
+      />
+    </div>
+
+    <div class="form-group">
+      <label>Nova adresa apoteke</label>
+      <input
+        type="text"
+        class="form-control"
+        name="address"
+        value="nova"
+        [(ngModel)]="form.address"
+        required
+        #address="ngModel"
+      />
+    </div>
+  </form>
+  <div *ngIf="showErr">
+    <p style="color:#8b0000">Greska! Niste uneli nista.</p>
+  </div>
+  <button class="btn btn-primary" (click)="azuriraj(form)">Azuriraj podatke apoteke</button>
+</div>
+
+

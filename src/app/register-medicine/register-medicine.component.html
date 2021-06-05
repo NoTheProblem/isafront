@@ -1,0 +1,176 @@
+<div class="m-3">
+  <button class="btn btn-primary"  *ngIf="isShown" (click)="toggle()" >Dodaj novi lek</button>
+  <button class="btn btn-primary" *ngIf="!isShown"  (click)="toggle()" >Prikazi sve lekove</button>
+</div>
+
+
+<div *ngIf="!isShown" class="row container-fluid"  id="divshow1">
+  <div class="m-3">
+    <h3>Definisanje novog leka</h3>
+  </div>
+  <div>
+    <form
+      *ngIf="!isSuccessful"
+      name="form"
+      (ngSubmit)="f.form.valid && onSubmit()"
+      #f="ngForm"
+      novalidate
+    >
+
+      <div class="form-group">
+        <label for="code">Sifra leka</label>
+        <input
+          type="text"
+          class="form-control"
+          name="code"
+          [(ngModel)]="form.code"
+          required
+          #code="ngModel"
+        />
+        <div class="alert-danger" *ngIf="f.submitted && code.invalid">
+          <div *ngIf="code.errors.required">Sifra je obavezna</div>
+        </div>
+      </div>
+
+
+      <div class="form-group">
+        <label for="name">Naziv leka</label>
+        <input
+          type="text"
+          class="form-control"
+          name="name"
+          [(ngModel)]="form.name"
+          required
+          #name="ngModel"
+        />
+        <div class="alert-danger" *ngIf="f.submitted && name.invalid">
+          <div *ngIf="name.errors.required">Ime je obavezno</div>
+        </div>
+      </div>
+
+
+      <div class="form-group">
+        <label for="type">Tip leka</label>
+        <input
+          type="text"
+          class="form-control"
+          name="type"
+          [(ngModel)]="form.type"
+          required
+          #type="ngModel"
+        />
+        <div class="alert-danger" *ngIf="f.submitted && type.invalid">
+          <div *ngIf="type.errors.required">Tip je obavezan</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="contraindications">Kontraindikacije leka</label>
+        <input
+          type="text"
+          class="form-control"
+          name="contraindications"
+          [(ngModel)]="form.contraindications"
+          required
+          #contraindications="ngModel"
+        />
+        <div class="alert-danger" *ngIf="f.submitted && contraindications.invalid">
+          <div *ngIf="contraindications.errors.required">Kontraindikacije su obavezne</div>
+        </div>
+      </div>
+
+
+        <div class="form-group">
+          <label for="composition">Sastav leka</label>
+          <input
+            type="text"
+            class="form-control"
+            name="composition"
+            [(ngModel)]="form.composition"
+            required
+            #composition="ngModel"
+          />
+          <div class="alert-danger" *ngIf="f.submitted && composition.invalid">
+            <div *ngIf="composition.errors.required">Sastav je obavezan</div>
+          </div>
+        </div>
+
+
+          <div class="form-group">
+            <label for="rdiot">Preporucen dnevni unos leka</label>
+            <input
+              type="number"
+              class="form-control"
+              name="rdiot"
+              [(ngModel)]="form.rdiot"
+              required
+              #rdiot="ngModel"
+            />
+            <div class="alert-danger" *ngIf="f.submitted && rdiot.invalid">
+              <div *ngIf="rdiot.errors.required">Preporucen dnevni unos leka je obavezan</div>
+            </div>
+          </div>
+
+
+      <div class="form-group">
+        <label for="loyaltyScore">Broj poena</label>
+        <input
+          type="number"
+          class="form-control"
+          name="loyaltyScore"
+          [(ngModel)]="form.loyaltyScore"
+          required
+          #loyaltyScore="ngModel"
+        />
+        <div class="alert-danger" *ngIf="f.submitted && loyaltyScore.invalid">
+          <div *ngIf="loyaltyScore.errors.required">Loyalty broj poena je obavezan</div>
+        </div>
+      </div>
+
+
+            <div class="form-group">
+              <button class="btn btn-primary btn-block" >Registruj lek</button>
+            </div>
+
+            <div class="alert alert-warning" *ngIf="f.submitted && isSignUpFailed">
+              Pravljenje leka nije uspelo<br />{{ errorMessage }}
+            </div>
+
+    </form>
+  </div>
+</div>
+
+
+<div *ngIf="isShown" class="row container-fluid"  id="divshow">
+  <div class="m-3">
+    <h3>Lekovi</h3>
+  </div>
+  <table class="table table-striped" >
+    <thead>
+    <tr>
+      <th scope="row">#</th>
+      <th scope="row">Sifra</th>
+      <th scope="row">Naziv</th>
+      <th scope="row">Tip</th>
+      <th scope="row">Kontraindikacije</th>
+      <th scope="row">Sastav</th>
+      <th scope="row">Preporucen dnevni unos</th>
+      <th scope="row">Broj poena</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr *ngFor="let medicine of medicine" >
+      <th scope="row">{{ medicine.id }}</th>
+      <td>{{ medicine.code}}</td>
+      <td>{{ medicine.name}}</td>
+      <td>{{ medicine.type}}</td>
+      <td>{{ medicine.contraindications}}</td>
+      <td>{{ medicine.composition}}</td>
+      <td>{{ medicine.rdiot}}</td>
+      <td>{{ medicine.loyaltyScore}}</td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+

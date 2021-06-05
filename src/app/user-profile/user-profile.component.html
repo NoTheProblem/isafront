@@ -1,0 +1,168 @@
+<div style="text-align: center;"> <h2>Vas korisnicki profil</h2></div>
+
+<div class="container">
+  <div class="main-body">
+    <div class="row">
+      <div class="col-lg-8">
+        <div class="card">
+          <div class="card-body">
+            <form
+              name="form"
+              (ngSubmit)="f.form.valid"
+              #f="ngForm"
+              novalidate
+            >
+            <div class="row mb-3">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Ime</h6>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                <input type="text" class="form-control"
+                       name="firstName"
+                       [(ngModel)]="form.firstName"
+                       [value]="user?.firstName"
+                       #firstName="ngModel">
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Prezime</h6>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                <input type="text" class="form-control"
+                       name="lastName"
+                       [(ngModel)]="form.lastName"
+                       [value]="user?.lastName"
+                       #lastName="ngModel">
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Korisnicko ime</h6>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                <input type="text" class="form-control"
+                       name="username"
+                       [(ngModel)]="form.username"
+                       [value]="user?.username"
+                       #username="ngModel">
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-sm-3">
+                <h6 class="mb-0">email</h6>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                <input type="text" class="form-control"
+                       name="email"
+                       [(ngModel)]="form.email"
+                       [value]="user?.email"
+                       #email="ngModel">
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Telefon</h6>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                <input type="text" class="form-control"
+                       name="phoneNumber"
+                       [(ngModel)]="form.phoneNumber"
+                       [value]="user?.phoneNumber"
+                       #phoneNumber="ngModel">
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Drzava</h6>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                <input type="text" class="form-control"
+                       name="country"
+                       [(ngModel)]="form.country"
+                       [value]="user?.country"
+                       #country="ngModel">
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Grad</h6>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                <input type="text" class="form-control"
+                       name="city"
+                       [(ngModel)]="form.city"
+                       [value]="user?.city"
+                       #city="ngModel">
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Adresa</h6>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                <input type="text" class="form-control"
+                       name="address"
+                       [(ngModel)]="form.address"
+                       [value]="user?.address"
+                       #address="ngModel">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-3"></div>
+              <div class="col-sm-9 text-secondary">
+                <button class="btn btn-primary" style="margin-right: 10px;" (click)="updateProfile(form)">Azuriraj podatke</button>
+                <button class="btn btn-primary" style="margin-right: 10px;" (click)="showPWChange = !showPWChange">Promena sifre</button>
+                <br>
+              </div>
+            </div>
+            </form>
+            <div *ngIf="showPWChange">
+              <br>
+              <div class="row mb-3">
+                <div class="col-sm-3">
+                  <h6 class="mb-0">Stara sifra</h6>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  <input type="password" class="form-control"
+                         name="oldPassword"
+                         [(ngModel)]="form.oldPassword"
+                         #oldPassword="ngModel">
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col-sm-3">
+                  <h6 class="mb-0">Nova sifra</h6>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  <input type="password" class="form-control"
+                         name="password"
+                         [(ngModel)]="form.password"
+                         #password="ngModel">
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col-sm-3">
+                  <h6 class="mb-0">Ponoviste sifru</h6>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  <input type="password" class="form-control"
+                         name="confrmPassword"
+                           [(ngModel)]="form.confrmPassword"
+                         #confrmPassword="ngModel">
+                </div>
+              </div>
+              <div style="text-align: center;">
+                <div *ngIf="error">
+                  <p style="color:red;"> Sifre se ne poklapaju!</p>
+                </div>
+              <button class="btn btn-primary" style="margin-right: 10px;" (click)="resetPassword()">Promeni sifru</button>
+              </div>
+
+
+            </div>
+          </div>
+        </div>
+
+  </div>
+</div>

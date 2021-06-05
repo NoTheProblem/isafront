@@ -1,0 +1,41 @@
+<h2>Lista farmaceuta</h2>
+<br>
+<div class="m-3">
+  <h3>Apoteke</h3>
+  <div class="wrap">
+    <div class="search">
+      Pretraga:
+      <input type="text" name="name" [(ngModel)]="name" (ngModelChange)="search()"  class="searchTerm" placeholder="">
+    </div>
+  </div>
+</div>
+
+
+<div class="m-3">
+  <div class="wrap">
+    <div class="search">
+      Pretraga po ocenama:
+      <input type="number" min="0" max='10' name="name"  [(ngModel)]="lowerGrade" (ngModelChange)="filterEvaluationGrade()"  class="searchTerm" placeholder="">
+    </div>
+  </div>
+</div>
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th scope="row" (click)="sort('id')" >#</th>
+    <th scope="row" (click)="sort('name')" >Ime</th>
+    <th scope="row" (click)="sort('surname')" scope="col">Prezime</th>
+    <th scope="row" (click)="sort('grade')" scope="col">Ocena</th>
+    <th scope="row" (click)="sort('pharmacy')" scope="col">Apoteka</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let pharmacist of pharmacists | orderBy: key: reverse " >
+    <th scope="row" >{{ pharmacist.id }}</th>
+    <td>{{ pharmacist.firstName }}</td>
+    <td>{{ pharmacist.lastName}}</td>
+    <td>{{ pharmacist.evaluationGrade}}</td>
+    <td>{{ pharmacist.pharmacy.name}}</td>
+  </tr>
+  </tbody>
+</table>

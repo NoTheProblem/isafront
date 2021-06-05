@@ -1,0 +1,83 @@
+<div>
+  <br>
+  <div style="text-align: center;">
+  <h2>Lekovi</h2>
+  </div>
+  <br><br>
+  <button class="btn btn-primary" (click)="showMissingMedicines()">Prikazi lekove koji nedostaju</button>
+  <br>
+</div>
+
+<div *ngIf="showMissing">
+  <br>
+  <div style="text-align: center;">
+   <h2>Lekovi koji nedostaju</h2>
+  </div>
+  <br>
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th scope="row" (click)="sort('id')">#</th>
+      <th scope="row" (click)="sort('code')">Šifra</th>
+      <th scope="row" (click)="sort('name')">Ime</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    <tr *ngFor="let medicine of missingMedicines | orderBy: key: reverse" >
+      <th scope="row">{{ medicine.id }}</th>
+      <td>{{ medicine.code }}</td>
+      <td>{{ medicine.name}}</td>
+    </tr>
+    </tbody>
+  </table>
+
+  <br>
+</div>
+
+<div class="m-3">
+  <div style="text-align: center;">
+    <h2>Lekovi na stanju</h2>
+  </div>
+  <div class="wrap">
+    <div class="search">
+      Pretraga lekova: <input type="text" name="name" [(ngModel)]="name" (ngModelChange)="search()"  class="searchTerm" placeholder="">
+    </div>
+  </div>
+
+</div>
+
+
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th scope="row" (click)="sort('id')">#</th>
+    <th scope="row" (click)="sort('code')">Šifra</th>
+    <th scope="row" (click)="sort('name')">Ime</th>
+    <th scope="row" (click)="sort('type')">Vrsta</th>
+    <th scope="row" (click)="sort('shape')">Oblik</th>
+    <th scope="row" (click)="sort('composition')">Sastav</th>
+    <th scope="row" (click)="sort('manufacturer')">Proizvođač</th>
+    <th scope="col">#</th>
+    <th scope="col">#</th>
+  </tr>
+  </thead>
+  <tbody>
+
+  <tr *ngFor="let medicine of medicines | orderBy: key: reverse" >
+    <th scope="row">{{ medicine.id }}</th>
+    <td>{{ medicine.code }}</td>
+    <td>{{ medicine.name}}</td>
+    <td>{{ medicine.type}}</td>
+    <td>{{ medicine.shape}}</td>
+    <td>{{ medicine.composition}}</td>
+    <td>{{ medicine.manufacturer}}</td>
+    <td>
+      <button class="btn btn-primary">Izmeni</button>
+    </td>
+    <td>
+      <button class="btn btn-primary" (click)="removeMedicine(medicine)">Ukloni</button>
+    </td>
+  </tr>
+  </tbody>
+</table>

@@ -1,0 +1,32 @@
+<div style="text-align: center;"><h2>Zahtevi za godišnje odmore i odsustva</h2></div>
+<div class="row container-fluid">
+
+  <table class="table table-striped" >
+    <thead>
+    <tr>
+      <th scope="row">#</th>
+      <th scope="row">Ime i prezime farmaceuta</th>
+      <th scope="row">Tip odsustva</th>
+      <th scope="row">Datum pocetka vazenja</th>
+      <th scope="row">Datum kraja vazenja</th>
+      <th scope="col"></th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr *ngFor="let ab of absences" >
+      <th scope="row">{{ ab.id }}</th>
+      <td>{{ ab.employeeName}}</td>
+      <td>{{ ab.typeOfAbsence}}</td>
+      <td>{{ ab.startDate | date}}</td>
+      <td>{{ ab.endDate | date}}</td>
+      <td>
+        <a [routerLink]="['/absence', ab.id]">
+          Resi zahtev
+        </a>
+      </td>
+    </tr>
+
+    </tbody>
+  </table>
+</div>

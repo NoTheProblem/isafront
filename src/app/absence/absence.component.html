@@ -1,0 +1,29 @@
+<div style="text-align: center;">
+<br>
+  <h2>Razmatranje zahteva</h2>
+<p> Zaposleni : {{absence?.employeeName}} </p>
+<p> Tip zahteva: {{absence?.typeOfAbsence}}</p>
+<p> Tekst zahtev :{{absence?.requestText}}</p>
+<p> Pocetak: {{absence?.startDate | date}}</p>
+<p> Kraj: {{absence?.endDate | date}}</p>
+
+<div>
+  <button class="btn btn-primary" style="margin-right: 10px;"  (click)="accept()" >Prihvati</button>
+  <button class="btn btn-primary" style="margin-right: 10px;"  (click)="decline()" >Odbij</button>
+</div>
+
+<div *ngIf="isDeclined">
+
+
+  <label>Unesite razlog odbijanja :</label>
+  <input
+    type="text"
+    class="form-control"
+    name="title"
+    id = "answer"
+    required
+  />
+  <button class="btn btn-primary" (click)="confDecline()" >Potvrdi odbijanje</button>
+</div>
+
+</div>

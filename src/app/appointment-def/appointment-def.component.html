@@ -1,0 +1,121 @@
+
+<div *ngIf="show">
+  <div style="text-align: center;">  <h2>Lista dermatologa - Definisanje termina</h2> </div>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="row">#</th>
+          <th scope="row">Ime</th>
+          <th scope="row">Prezime</th>
+          <th scope="row">Ocena</th>
+          <th scope="col">#</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let der of dermatoligists " >
+          <th scope="row">{{ der.id }}</th>
+          <td>{{ der.firstName }}</td>
+          <td>{{ der.lastName}}</td>
+          <td>{{ der.evaluationGrade}}</td>
+          <td>
+            <button class="btn btn-primary" (click)="openDerma(der)">Definisi termine</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+</div>
+
+<div *ngIf="!show">
+  <div style="text-align: center;"><h2>Definisanje termina</h2></div>
+  Ime i prezime: {{derma.firstName}} {{derma.lastName}}
+  <br>
+  <div *ngIf="showNoAbsence">
+    Nema zakazanih odsustva u buducnosti
+  </div>
+  <div *ngIf="showAbsence">
+    <b>Postoje zakazana odsustva u buducnosti pazite na to! </b>
+
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th scope="row">Pocetak</th>
+        <th scope="row">Kraj</th>
+      </tr>
+      </thead>
+      <tbody>
+
+      <tr *ngFor="let absence of absences" >
+        <td>{{ absence.startDate | date:'longDate' }}</td>
+        <td>{{ absence.endDate | date:'longDate'}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <br>
+  Radno vreme: <b>{{workingHours.workDay}} {{workingHours.startTime}} - {{workingHours.endTime }} </b>
+  <br>
+  <br>
+  Izaberite datum za pravljenje pregleda koji odgovara radnom vremenu:
+  <form>
+    <input
+      type="date"
+      class="form-control"
+      name="examinationDateInput"
+      [(ngModel)]="form.examinationDateInput"
+    />
+  </form>
+  <div *ngIf="showWorkDayError">
+    <p> Niste odabrali dobar dan</p>
+  </div>
+  <br>
+  <button class="btn btn-primary" (click)="showExaminations(form)">Prikazi</button>
+  <br>
+  <div *ngIf="showAppointments">
+    <h4>Prikaz termina za {{examinationDateInput  | date:'longDate'}}</h4>
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th scope="row">Datum</th>
+        <th scope="row">Vreme</th>
+        <th scope="row">Trajanje</th>
+        <th scope="row">Cena</th>
+      </tr>
+      </thead>
+      <tbody>
+
+      <tr *ngFor="let ex of examinations" >
+        <td>{{ ex.date | date:'longDate' }}</td>
+        <td>{{ ex.date | date:'shortTime'}}</td>
+        <td>{{ ex.durationMinutes}} minuta</td>
+        <td>{{ ex.price}}</td>
+      </tr>
+      </tbody>
+    </table>
+    <br>
+    <div *ngIf="!showMake" style="text-align: center;">
+      <button class="btn btn-primary" (click)="showMake = true">Napravi novi termin</button>
+    </div>
+    <div *ngIf="showMake" style="text-align: center;">
+      <form>
+        <br>
+        Unesite cenu:
+        <input type="number" name ="price" [(ngModel)]="form.price" placeholder="Cena termina">    <br>
+        <br>
+        <input
+          type="time"
+          class="form-control"
+          name="startTime"
+          [(ngModel)]="form.startTime"
+          required
+        />
+        <br>
+        Trajanje termina (u minutima):
+        <input type="number" name ="duration" [(ngModel)]="form.duration"  value=30>
+        <br>
+      </form>
+      <br>
+      <button class="btn btn-primary" (click)="createAppointment(form)">Napravi novi termin</button>
+    </div>
+  </div>
+</div>

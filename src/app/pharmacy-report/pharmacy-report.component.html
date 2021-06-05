@@ -1,0 +1,196 @@
+<div style="text-align: center;"> <h2>Izvestaj rada apoteke</h2> </div>
+<br>
+Prosecna ocena apoteke: {{pharmacy?.evaluationGrade}}
+
+<mat-divider></mat-divider>
+<br>
+<button class="btn btn-primary"  style="margin-right: 10px;" (click)="showPharmaGradesFnc()">Prosecne ocene farmaceuta</button>
+<button class="btn btn-primary"  style="margin-right: 10px;" (click)="showDermaGradesFnc()" >Prosecne ocene dermatologa</button>
+<br>
+<div *ngIf="showGrades">
+  <div style="text-align: center;">
+    <h3>Prikaz ocena {{empType}}</h3>
+  </div>
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th scope="row" >Ime</th>
+      <th scope="row" >Prezime</th>
+      <th scope="row" >Ocena</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    <tr *ngFor="let emp of employees">
+      <td>{{ emp.firstName }}</td>
+      <td>{{ emp.lastName}}</td>
+      <td>{{ emp.evaluationGrade}}</td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+<br>
+<mat-divider></mat-divider>
+<br>
+<button class="btn btn-primary"  style="margin-right: 10px;" (click)="showExaminationReportOptions = !showExaminationReportOptions; showExaminationReport = false ; showMedicineReportOptions= false; showIncomeReportOptions = false; showMedicineReport = false;">Izvestaj pregleda</button>
+<button class="btn btn-primary"  style="margin-right: 10px;" (click)="showIncomeReportOptions = !showIncomeReportOptions; showExaminationReport = false; showMedicineReportOptions= false; showExaminationReportOptions = false; showMedicineReport = false;">Izvestaj prihoda</button>
+<button class="btn btn-primary"  style="margin-right: 10px;" (click)="showMedicineReportOptions = !showMedicineReportOptions; showExaminationReport = false; showIncomeReportOptions= false; showExaminationReportOptions = false; showMedicineReport = false; ">Izvestaj lekova</button>
+
+
+<Br>
+<div *ngIf="showExaminationReportOptions">
+  <br>
+  Vrsta izvestaja:
+  <select  [(ngModel)]="reportType" name="selectedDay">
+    <option selected > -- izaberite opciju --</option>
+    <option > Mesecni izvestaj </option>
+    <option > Kvartalni izvestaj </option>
+    <option > Godisnji izvestaj</option>
+  </select>
+  <br>
+  <div *ngIf="reportType==='Mesecni izvestaj'">
+    <br>
+    <label>Odaberite mesec</label>
+    <input
+      type="month"
+      class="form-control"
+      name="startDate"
+      [(ngModel)]="form.startDate"
+      required
+      #startDate="ngModel"
+    />
+    <br>
+    <button class="btn btn-primary"  style="margin-right: 10px;" (click)="generateMonthlyReportExamination()">Prikazi izvestaj</button>
+
+  </div>
+  <div *ngIf="reportType==='Kvartalni izvestaj'">
+    <br>
+    Unesite godinu za koju zelite izvestaj:
+    <input
+      type="year"
+      class="form-control"
+      name="startDate"
+      [(ngModel)]="form.startDate"
+      required
+      #startDate="ngModel"
+    />    <br>
+    Unesite kvartal za koju zelite izvestaj:
+    <select  [(ngModel)]="quartal" name="selectedDay">
+      <option > 1 </option>
+      <option > 2 </option>
+      <option > 3 </option>
+      <option > 4 </option>
+    </select>    <br>
+    <button class="btn btn-primary"  style="margin-right: 10px;" (click)="generateQuartalReportExamination()">Prikazi izvestaj</button>
+
+  </div>
+  <div *ngIf="reportType==='Godisnji izvestaj'">
+    <br>
+    Unesite godinu za koju zelite izvestaj:
+    <input
+      type="year"
+      class="form-control"
+      name="startDate"
+      [(ngModel)]="form.startDate"
+      required
+      #startDate="ngModel"
+    />    <br>
+
+    <button class="btn btn-primary"  style="margin-right: 10px;" (click)="generateYearlyReportExamination()">Prikazi izvestaj</button>
+
+  </div>
+</div>
+<div *ngIf="showIncomeReportOptions">
+  <br>
+  <label>Odaberite pocetni datum za izvestaj:</label>
+  <input
+    type="date"
+    class="form-control"
+    name="startDate"
+    [(ngModel)]="form.startDate"
+    required
+    #startDate="ngModel"
+  /><Br>
+  <label>Odaberite pocetni datum za izvestaj: </label>
+  <input
+    type="date"
+    class="form-control"
+    name="startDate"
+    [(ngModel)]="form.endDate"
+    required
+    #startDate="ngModel"
+  />
+  <button class="btn btn-primary"  style="margin-right: 10px;" (click)="generateIncomeReport()">Prikazi izvestaj</button>
+
+
+</div>
+<div *ngIf="showMedicineReportOptions">
+  <br>
+  Vrsta izvestaja:
+  <select  [(ngModel)]="reportType" name="selectedDay">
+    <option selected > -- izaberite opciju --</option>
+    <option > Mesecni izvestaj </option>
+    <option > Kvartalni izvestaj </option>
+    <option > Godisnji izvestaj</option>
+  </select>
+  <br>
+  <div *ngIf="reportType==='Mesecni izvestaj'">
+    <br>
+    <label>Odaberite mesec</label>
+    <input
+      type="month"
+      class="form-control"
+      name="startDate"
+      [(ngModel)]="form.startDate"
+      required
+      #startDate="ngModel"
+    />
+    <br>
+    <button class="btn btn-primary"  style="margin-right: 10px;" (click)="generateMonthlyReportMedicine()">Prikazi izvestaj</button>
+
+  </div>
+  <div *ngIf="reportType==='Kvartalni izvestaj'">
+    <br>
+    Unesite godinu za koju zelite izvestaj:
+    <input
+      type="year"
+      class="form-control"
+      name="startDate"
+      [(ngModel)]="form.startDate"
+      required
+      #startDate="ngModel"
+    />    <br>
+    Unesite kvartal za koju zelite izvestaj:
+    <select  [(ngModel)]="quartal" name="selectedDay">
+      <option > 1 </option>
+      <option > 2 </option>
+      <option > 3 </option>
+      <option > 4 </option>
+    </select>    <br>
+    <button class="btn btn-primary"  style="margin-right: 10px;" (click)="generateQuartalReportMedicine()">Prikazi izvestaj</button>
+
+  </div>
+  <div *ngIf="reportType==='Godisnji izvestaj'">
+    <br>
+    Unesite godinu za koju zelite izvestaj:
+    <input
+      type="year"
+      class="form-control"
+      name="startDate"
+      [(ngModel)]="form.startDate"
+      required
+      #startDate="ngModel"
+    />    <br>
+
+    <button class="btn btn-primary"  style="margin-right: 10px;" (click)="generateYearlyReportMedicine()">Prikazi izvestaj</button>
+
+  </div>
+</div>
+
+<div *ngIf="showExaminationReport">
+  <app-graphical-report [tip]="reportType" [textInput] = "textInput" [data]="data"></app-graphical-report>
+</div>
+<div *ngIf="showMedicineReport">
+  <app-graphical-report-medicine [data]="medicineDate"></app-graphical-report-medicine>
+</div>
+

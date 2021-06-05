@@ -1,0 +1,69 @@
+<header>
+  <nav class="navbar navbar-ligh navbar-expand-md" style="background-color: #e3f2fd;">
+
+    <div>
+      <a *ngIf="isLoggedIn" class="navbar-brand">{{ username }}</a>
+    </div>
+
+    <ul class="navbar-nav" *ngIf="!isLoggedIn || (isLoggedIn && role==='ROLE_USER')" >
+      <li><a class="nav-link" routerLink="pharmacies">Apoteke</a></li>
+    </ul>
+
+    <ul class="navbar-nav" *ngIf="!isLoggedIn" >
+      <li><a class="nav-link" routerLink="medicines">Lekovi</a></li>
+    </ul>
+
+    <ul class="navbar-nav " *ngIf="isLoggedIn && role==='ROLE_USER'" >
+      <li><a class="nav-link" routerLink="pharmacies">Istorija poseta</a></li>
+      <li><a class="nav-link" routerLink="dermatologistList">Dermatolozi</a></li>
+      <li><a class="nav-link" routerLink="pharmacistList">Farmaceuti</a></li>
+      <li><a class="nav-link" routerLink="freeExamination">Termini dermatolog</a></li>
+      <li><a class="nav-link" routerLink="freeCounseling">Termini farmaceut</a></li>
+      <li><a class="nav-link" routerLink="freeExamination">Zakazivanje termina</a></li>
+      <li><a class="nav-link" routerLink="freeExamination">Pisanje žalbi</a></li>
+      <li><a class="nav-link" routerLink="medicines">Lekovi</a></li>
+    </ul>
+
+    <ul class="navbar-nav " *ngIf="isLoggedIn && role==='ROLE_ADMIN'" >
+      <li><a class="nav-link" routerLink="pharmacy">Apoteka</a></li>
+      <li><a class="nav-link" routerLink="appDef">Termini</a></li>
+      <li><a class="nav-link" routerLink="promotions">Akcije/Promocije</a></li>
+      <li><a class="nav-link" routerLink="order-forms">Narudzbenice</a></li>
+      <li><a class="nav-link" routerLink="price-list">Cenovnik</a></li>
+      <li><a class="nav-link" routerLink="pharmacy-medicine">Lekovi</a></li>
+      <li><a class="nav-link" routerLink="pharmacy-employees">Zaposleni</a></li>
+      <li><a class="nav-link" routerLink="pharmacy-report">Izvestaj</a></li>
+      <li><a class="nav-link" routerLink="absences">Godisnji</a></li>
+    </ul>
+
+    <ul class="navbar-nav " *ngIf="isLoggedIn && role==='ROLE_PHARMACIST'" >
+      <li><a class="nav-link" routerLink="lista-korisnika">Lista korisnika</a></li>
+    </ul>
+
+    <ul class="navbar-nav " *ngIf="isLoggedIn && role==='ROLE_SYSADMIN'" >
+      <li><a class="nav-link" routerLink="register-pharmacy">Registracija apoteke</a></li>
+      <li><a class="nav-link" routerLink="register-medicine">Registracija leka</a></li>
+      <li><a class="nav-link" routerLink="register-employee">Registracija zaposlenih</a></li>
+      <li><a class="nav-link" routerLink="absences">Godisnji</a></li>
+    </ul>
+
+    <ul class="navbar-nav " *ngIf="isLoggedIn && role==='ROLE_SUPPLIER'" >
+      <li><a class="nav-link" routerLink="supplier-update-">Azuriraj svoje podatke</a></li>
+    </ul>
+
+    <ul class="navbar-nav navbar-collapse justify-content-end" *ngIf="!isLoggedIn">
+      <li><a class="nav-link" routerLink="login">Prijava</a></li>
+      <li><a class="nav-link" routerLink="register">Registracija</a></li>
+    </ul>
+
+    <ul class="navbar-nav ml-auto" *ngIf="isLoggedIn">
+      <li class="nav-link">
+        <a href="/profile" class="nav-link" routerLink="profile">{{ username }}</a>
+      </li>
+      <li class="nav-link">
+        <a href class="nav-link" (click)="logout()">LogOut</a>
+      </li>
+    </ul>
+
+  </nav>
+</header>

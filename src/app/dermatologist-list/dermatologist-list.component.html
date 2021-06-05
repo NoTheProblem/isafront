@@ -1,0 +1,58 @@
+<h2>Lista dermatologa</h2>
+<br>
+<div class="m-3">
+  <div class="wrap">
+    <div class="search">
+      Pretraga po imenu i prezimenu:
+      <input type="text" name="name" [(ngModel)]="name" (ngModelChange)="search()"  class="searchTerm" placeholder="">
+    </div>
+  </div>
+</div>
+
+
+<div class="m-3">
+  <div class="wrap">
+    <div class="search">
+      Pretraga po ocenama:
+      <input type="number" min="0" max='10' name="name"  [(ngModel)]="lowerGrade" (ngModelChange)="filterEvaluationGrade()"  class="searchTerm" placeholder="">
+    </div>
+  </div>
+</div>
+
+<div class="m-3">
+  <div class="wrap">
+    <div class="search">
+      Pretraga po apotekama:
+      <select  [(ngModel)]="selectedPharmacy" (change)="filterByPharmacy()">
+        <option  selected value>-- sve apoteke --</option>
+        <option *ngFor="let pharmacy of pharmacies">{{pharmacy.name}}</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th scope="row" (click)="sort('id')" >#</th>
+    <th scope="row" (click)="sort('name')" >Ime</th>
+    <th scope="row" (click)="sort('surname')" scope="col">Prezime</th>
+    <th scope="row" (click)="sort('grade')" scope="col">Ocena</th>
+    <th scope="row" (click)="sort('pharmacy')" scope="col">Apoteke</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let dermatologist of dermatologists | orderBy: key: reverse " >
+    <th scope="row" >{{ dermatologist.id }}</th>
+    <td>{{ dermatologist.firstName }}</td>
+    <td>{{ dermatologist.lastName}}</td>
+    <td>{{ dermatologist.evaluationGrade}}</td>
+    <td>
+      <ul *ngFor="let pharmacy of dermatologist.pharmacys">
+        <li>{{pharmacy.name}}</li>
+      </ul>
+    </td>
+  </tr>
+  </tbody>
+</table>

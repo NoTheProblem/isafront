@@ -1,0 +1,161 @@
+<div class="m-3">
+  <button class="btn btn-primary"  *ngIf="isShown" (click)="toggle()" >Dodaj novu poruzdbenicu</button>
+  <button class="btn btn-primary" *ngIf="!isShown"  (click)="toggle()" >Prikazi sve porudzbenice</button>
+</div>
+
+
+<div *ngIf="!isShown" class="row container-fluid"  id="divshow1">
+  <div class="m-3">
+    <h3>Definisanje nove Porudzbenice</h3>
+  </div>
+  <br>
+  <br>
+  <div>
+    <form
+      *ngIf="!isSuccessful"
+      name="form"
+      (ngSubmit)="f.form.valid"
+      #f="ngForm"
+      novalidate
+    >
+
+
+      <div class="form-group">
+        <label>Datum roka za ponude</label>
+        <input
+          type="date"
+          class="form-control"
+          name="startDate"
+          [(ngModel)]="form.startDate"
+          required
+          #startDate="ngModel"
+        />
+
+        <div class="alert-danger" *ngIf="f.submitted && startDate.invalid">
+          <div *ngIf="startDate.errors.required">Datum roka za ponude je obavezan</div>
+        </div>
+      </div>
+
+      <div class="search">
+        <h4> Pretraga lekova </h4>
+        <input type="text" name="name" [(ngModel)]="name" (ngModelChange)="search()"  class="searchTerm" placeholder="Unesite ime/sifru leka">
+
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th scope="row">Šifra</th>
+            <th scope="row">Ime</th>
+            <th scope="col">#</th>
+          </tr>
+          </thead>
+          <tbody>
+
+          <tr *ngFor="let medicine of medicines" >
+            <td>{{ medicine.code }}</td>
+            <td>{{ medicine.name}}</td>
+            <td>
+              <button class="btn btn-primary" (click)="addToOrderForm(medicine)">Dodaj u narudzbenicu</button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+
+      <div *ngIf="isQuanShown">
+        {{medH?.medicineName}} :
+        <input type="number" name ="newquan" [(ngModel)]="newquan" placeholder="Unesi kolicinu za odabrani lek">
+        <button class="btn btn-primary" (click)="changeQuan()">Promeni kolicinu</button>
+      </div>
+
+      <div class="row container-fluid">
+        <div class="m-3">
+          <h3>Lekovi za narucivanje</h3>
+        </div>
+        <table class="table table-striped" >
+          <thead>
+          <tr>
+            <th scope="row">#</th>
+            <th scope="row">Naziv leka</th>
+            <th scope="row">Sifra leka</th>
+            <th scope="row">Kolicina</th>
+            <th></th>
+            <th></th>
+            <th></th>
+          </tr>
+          </thead>
+
+          <tbody>
+          <tr *ngFor="let med of medHelp" >
+            <th scope="row">{{ med.medicineID }}</th>
+            <td>{{ med.medicineName }}</td>
+            <td>{{ med.medicineCode}}</td>
+            <td>{{ med.quantity }}</td>
+            <td>
+              <button class="btn btn-primary" (click)="Dodaj(med)">Dodaj</button>
+              <button class="btn btn-primary" (click)="Smanji(med)">Smanji</button>
+            </td>
+            <td>
+              <button class="btn btn-primary" (click)="ShowQuanEnter(med)">Unesi kolicinu</button>
+            </td>
+            <td>
+              <button class="btn btn-primary" (click)="Izbrisi(med)">Izbaci</button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+
+      <div class="form-group">
+        <button class="btn btn-primary btn-block" (click)="createOrder()" >Posalji porudzbenicu</button>
+      </div>
+
+      <div class="alert alert-warning" *ngIf="f.submitted && isSubmitFailed">
+        Slanje porudzbenice nije uspelo<br />{{ errorMessage }}
+      </div>
+    </form>
+  </div>
+
+
+
+</div>
+
+
+
+
+<div *ngIf="isShown"  id="divshow">
+  <div class="header">
+    <h3>Porudzbenice</h3>
+  </div>
+
+    <button class="btn btn-primary"  style="margin-right: 10px;" (click)="showAll()" >Prikazi sve</button>
+    <button class="btn btn-primary"  style="margin-right: 10px;" (click)="showCreated()" >Prikazi kreirane</button>
+    <button class="btn btn-primary"  style="margin-right: 10px;" (click)="showProcessed()" >Prikazi obradjene</button>
+
+    <table class="table table-striped" >
+    <thead>
+    <tr>
+      <th scope="row">#</th>
+      <th scope="row">Kod</th>
+      <th scope="row">Status</th>
+      <th scope="row">Rok</th>
+      <th></th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr *ngFor="let ord of orders">
+      <th scope="row">{{ ord.id }}</th>
+      <td> #{{ord.id}}</td>
+      <td>{{ ord.status }}</td>
+      <td>{{ ord.endDate  | date:'longDate'}} </td>
+      <td>
+        <a [routerLink]="['/orderdetails', ord.id]">
+          Prikazi detalje
+        </a>      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+

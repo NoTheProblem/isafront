@@ -1,0 +1,28 @@
+<div class="m-3">
+  <h3>Pacijenti</h3>
+  <div class="wrap">
+    <div class="search">
+      <input type="text" name="name" [(ngModel)]="name" (ngModelChange)="search()"  class="searchTerm" placeholder="">
+    </div>
+  </div>
+
+</div>
+
+
+
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th scope="row"  >#</th>
+    <th scope="row" >Ime</th>
+    <th scope="row" >Prezime</th>
+
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let patient of patientList " >
+    <td>{{ patient.id }}</td>
+    <td>{{ patient.firstName}}</td>
+    <td>{{ patient.lastName}}</td>
+  </tr>
+  </tbody>

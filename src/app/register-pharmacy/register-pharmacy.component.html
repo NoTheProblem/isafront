@@ -1,0 +1,142 @@
+<div class="m-3">
+  <button class="btn btn-primary"  *ngIf="isShown" (click)="toggle()" >Dodaj novu apoteku</button>
+  <button class="btn btn-primary" *ngIf="!isShown"  (click)="toggle()" >Prikazi sve apoteke</button>
+</div>
+
+
+<div *ngIf="!isShown" class="row container-fluid"  id="divshow1">
+  <div class="m-3">
+    <h3>Definisanje nove apoteke</h3>
+  </div>
+  <div>
+    <form
+      *ngIf="!isSuccessful"
+      name="form"
+      (ngSubmit)="f.form.valid && onSubmit()"
+      #f="ngForm"
+      novalidate
+    >
+
+      <div class="form-group">
+        <label for="name">Naziv apoteke</label>
+        <input
+          type="text"
+          class="form-control"
+          name="name"
+          [(ngModel)]="form.name"
+          required
+          #name="ngModel"
+        />
+        <div class="alert-danger" *ngIf="f.submitted && name.invalid">
+          <div *ngIf="name.errors.required">Naziv je obavezan</div>
+        </div>
+      </div>
+
+
+      <div class="form-group">
+        <label for="country">Drzava</label>
+        <input
+          type="text"
+          class="form-control"
+          name="country"
+          [(ngModel)]="form.country"
+          required
+          #country="ngModel"
+        />
+        <div class="alert-danger" *ngIf="f.submitted && country.invalid">
+          <div *ngIf="country.errors.required">Drzava je obavezna</div>
+        </div>
+      </div>
+
+
+      <div class="form-group">
+        <label for="city">Grad</label>
+        <input
+          type="text"
+          class="form-control"
+          name="city"
+          [(ngModel)]="form.city"
+          required
+          #city="ngModel"
+        />
+        <div class="alert-danger" *ngIf="f.submitted && city.invalid">
+          <div *ngIf="city.errors.required">Grad je obavezan</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="address">Adresa</label>
+        <input
+          type="text"
+          class="form-control"
+          name="address"
+          [(ngModel)]="form.address"
+          required
+          #address="ngModel"
+        />
+        <div class="alert-danger" *ngIf="f.submitted && address.invalid">
+          <div *ngIf="address.errors.required">Adresa je obavezna</div>
+        </div>
+      </div>
+
+
+      <div class="form-group">
+        <label for="pharmacyDescription">Opis apoteke</label>
+        <input
+          type="text"
+          class="form-control"
+          name="pharmacyDescription"
+          [(ngModel)]="form.pharmacyDescription"
+          required
+          #pharmacyDescription="ngModel"
+        />
+        <div class="alert-danger" *ngIf="f.submitted && pharmacyDescription.invalid">
+          <div *ngIf="pharmacyDescription.errors.required">Opis apoteke je obavezan</div>
+        </div>
+      </div>
+
+
+      <div class="form-group">
+        <button class="btn btn-primary btn-block" >Registruj apoteku</button>
+      </div>
+
+      <div class="alert alert-warning" *ngIf="f.submitted && isSignUpFailed">
+        Pravljenje apoteke nije uspelo<br />{{ errorMessage }}
+      </div>
+
+    </form>
+  </div>
+</div>
+
+
+<div *ngIf="isShown" class="row container-fluid"  id="divshow">
+  <div class="m-3">
+    <h3>Apoteke</h3>
+  </div>
+  <table class="table table-striped" >
+    <thead>
+    <tr>
+      <th scope="row">#</th>
+      <th scope="row">Naziv</th>
+      <th scope="row">Drzava</th>
+      <th scope="row">Grad</th>
+      <th scope="row">Adresa</th>
+      <th scope="row">Opis</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr *ngFor="let pharmacy of pharmacy" >
+      <th scope="row">{{ pharmacy.id }}</th>
+      <td>{{ pharmacy.name}}</td>
+      <td>{{ pharmacy.country}}</td>
+      <td>{{ pharmacy.city}}</td>
+      <td>{{ pharmacy.address}}</td>
+      <td>{{ pharmacy.pharmacyDescription}}</td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+
+
