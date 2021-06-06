@@ -1,21 +1,14 @@
 {
   "name": "pharmacy-front",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "heroku-postbuild": "ng build --prod && npm install -g http-server-spa",
-    "start": "http-server-spa dist/pharmacy-front index.html $PORT",
+    "heroku-postbuild": "ng build --prod && nmp install -g http-server-spa",
+    "start": "ng serve",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
-  },
-  "keywords": [
-    "example",
-    "heroku"
-  ],
-  "engines": {
-    "node": "14.x"
   },
   "private": true,
   "dependencies": {
@@ -64,17 +57,5 @@
     "ts-node": "~8.3.0",
     "tslint": "~6.1.0",
     "typescript": "~4.0.2"
-  },
-  "description": "This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.2.0.",
-  "main": "karma.conf.js",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/NoTheProblem/isafront.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/NoTheProblem/isafront/issues"
-  },
-  "homepage": "https://github.com/NoTheProblem/isafront#readme"
+  }
 }

@@ -1,11 +1,8 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
-
+import { Component, OnInit} from '@angular/core';
 import {PharmacyModel} from '../model/pharmacy.model';
 import {PharmacyService} from '../services/pharmacy.service';
-import {ActivatedRoute } from '@angular/router';
-import {EmployeeModel} from '../model/employee.model';
-import {EmployeeService} from '../services/employee.service';
-
+import {ActivatedRoute, Router} from '@angular/router';
+import {TokenStorageService} from '../_services/token-storage.service';
 
 
 @Component({
@@ -29,13 +26,18 @@ export class PharmacyComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private pharmacyService: PharmacyService
+    private pharmacyService: PharmacyService,
+    private tokenStorageService: TokenStorageService,
+    private router: Router
   ) {
   }
 
-
   ngOnInit(): void {
-      this.pharmacyService.getPharmacyByAdmin().subscribe((pharmacy: PharmacyModel) => {
+    if (this.tokenStorageService.permissionForPage('ROLE_ADMIN'))
+    {
+      this.router.navigate(['/error']);
+    }
+    this.pharmacyService.getPharmacyByAdmin().subscribe((pharmacy: PharmacyModel) => {
         this.pharmacy = pharmacy;
         this.adresa = pharmacy.city + ' ' + pharmacy.address +  ' ' + pharmacy.city;
       });

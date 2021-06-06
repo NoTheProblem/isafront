@@ -1,6 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
 import * as Highcharts from 'highcharts';
 import {PharmacyExaminationReportModel} from '../model/pharmacyExaminationReport.model';
+import {TokenStorageService} from '../_services/token-storage.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-graphical-report',
@@ -13,11 +15,22 @@ export class GraphicalReportComponent implements OnInit {
   @Input() data: PharmacyExaminationReportModel;
   chartOptions: {};
   Highcharts = Highcharts;
+  showEmpty = false;
 
   constructor(
-  ) { }
+    private tokenStorageService: TokenStorageService,
+    private router: Router
+  ) {
+  }
 
   ngOnInit(): void {
+    if (this.tokenStorageService.permissionForPage('ROLE_ADMIN'))
+    {
+      this.router.navigate(['/error']);
+    }
+    if (this.data.data.length === 0){
+      this.showEmpty = true;
+    }
     this.chartOptions = {
       chart: {
         type: 'line'

@@ -35,7 +35,7 @@ export class MedicineService {
         this.toast.success(`Cena je dodata.`);
       },
       (error => {
-        this.toast.error(`Cena nije dodata.`);
+        this.toast.error(`Cena nije dodata. `);
       })
     );
   }
@@ -51,7 +51,7 @@ export class MedicineService {
         this.toast.success(`${medicine.type} je dodat.`);
       },
       (error => {
-        this.toast.error(`${medicine.type} nije dodat.`);
+        this.toast.error(`${medicine.type} nije dodat. `);
       })
     );
   }
@@ -63,7 +63,7 @@ export class MedicineService {
         this.toast.success(`Lek je uklonjen.`);
       },
       (error => {
-        this.toast.error(`Lek nije uspesno uklonjen.`);
+        this.toast.error(`Lek nije uspesno uklonjen. `);
       })
     );
   }

@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {MedicineService} from '../services/medicine.service';
 import {MedicineModel} from '../model/medicine.model';
 import {PriceMedicineModel} from '../model/priceMedicine.model';
+import {TokenStorageService} from '../_services/token-storage.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-price-list',
@@ -19,16 +21,22 @@ export class PriceListComponent implements OnInit {
   public isSubmitFailed = false;
   public endDate: Date;
   public isSuccessful = false;
-  private examinationDateInput: Date;
   name = '';
   public show = false;
   form: any = {};
 
 
-  constructor(private medicineService: MedicineService
-  ) { }
+  constructor(private medicineService: MedicineService,
+              private tokenStorageService: TokenStorageService,
+              private router: Router
+  ) {
+  }
 
   ngOnInit(): void {
+    if (this.tokenStorageService.permissionForPage('ROLE_ADMIN'))
+    {
+      this.router.navigate(['/error']);
+    }
     this.initMedicines();
   }
 

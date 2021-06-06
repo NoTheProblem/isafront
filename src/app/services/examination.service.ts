@@ -9,7 +9,6 @@ import {DermatologistModel} from '../model/dermatologist.model';
 @Injectable()
 export class ExaminationService {
   private path = '';
-  private response = '';
 
   constructor(private httpClient: HttpClient,
               private toast: ToastrService

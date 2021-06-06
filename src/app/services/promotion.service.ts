@@ -23,10 +23,10 @@ export class PromotionService {
   public addPromotion(promotion: PromotionModel): void {
     this.httpClient.post(Constants.API + '/promotion/addPromotion', promotion).subscribe(
       (response: any) => {
-        this.toast.success(`${promotion.type} je dodata.`);
+        this.toast.success(`${promotion.type} je dodata.` );
       },
       (error => {
-        this.toast.error(`${promotion.type} nije dodata.`);
+        this.toast.error(`${promotion.type} nije dodata. `);
       })
     );
   }

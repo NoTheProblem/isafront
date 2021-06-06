@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {AbsenceModel} from '../model/absence.model';
 import {AbsenceService} from '../services/absence.service';
 import {TokenStorageService} from '../_services/token-storage.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-absences',
@@ -16,7 +17,8 @@ export class AbsencesComponent implements OnInit {
 
   constructor(
     private abscenceService: AbsenceService,
-    private tokenStorageService: TokenStorageService
+    private tokenStorageService: TokenStorageService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -24,11 +26,13 @@ export class AbsencesComponent implements OnInit {
     if (this.role === 'ROLE_ADMIN'){
         this.getPharmaRequests();
     }
-    if (this.role === 'ROLE_SYSADMIN'){
+    else if (this.role === 'ROLE_SYSADMIN'){
       this.getDermaRequests();
     }
+    else {
+      this.router.navigate(['/error']);
+    }
   }
-
 
   public getDermaRequests(): void {
     this.abscenceService.getAllDermatologistRequests()

@@ -3,7 +3,6 @@ import {PharmacyModel} from '../model/pharmacy.model';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {ToastrService} from 'ngx-toastr';
-import {MedicineRegisterModel} from '../model/medicineRegister.model';
 import {MedicineModel} from '../model/medicine.model';
 import {ExaminationModel} from '../model/examination.model';
 import {Constants} from './constants';
@@ -36,7 +35,7 @@ export class PharmacyService {
         this.toast.success(`${pharmacy.name} je dodat.`);
       },
       (error => {
-        this.toast.error(`${pharmacy.name} nije dodat.`);
+        this.toast.error(`${pharmacy.name} nije dodat. `);
       })
     );
   }
@@ -47,7 +46,7 @@ export class PharmacyService {
         this.toast.success(`Uspesno ste se pretplatili!`);
       },
       (error => {
-        this.toast.error(`Pretplata nije uspela!`);
+        this.toast.error(`Pretplata nije uspela! `);
       })
     );
   }
@@ -57,7 +56,7 @@ export class PharmacyService {
         this.toast.success(`Azuriranje je uspelo.`);
       },
       (error => {
-        this.toast.error(`Azuriranje nije uspelo`);
+        this.toast.error(`Azuriranje nije uspelo `);
       })
     );
   }

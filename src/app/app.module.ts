@@ -47,8 +47,11 @@ import { GraphicalReportComponent } from './graphical-report/graphical-report.co
 import { GraphicalReportMedicineComponent } from './graphical-report-medicine/graphical-report-medicine.component';
 import {RegisterEmployeeComponent} from './register-employee/register-employee.component';
 import { AbsenceComponent } from './absence/absence.component';
-
-
+import { ViewComplaintsComponent} from './view-complaints/view-complaints.component';
+import { LoyaltyProgramComponent} from './loyalty-program/loyalty-program.component';
+import {PreviousOffersComponent} from './previous-offers/previous-offers.component';
+import {PurchaseOrderComponent} from './purchase-order/purchase-order.component';
+import {SupplierUpdateComponent} from './supplier-update/supplier-update.component';
 
 const mapConfig: YaConfig = {
   apikey: '3c15c704-3d48-482f-8f18-5aacd24c1975',
@@ -67,6 +70,7 @@ const mapConfig: YaConfig = {
     LoginComponent,
     RegisterComponent,
     MedicinesComponent,
+    SupplierUpdateComponent,
     UserProfileComponent,
     ExaminationComponent,
     CounselingComponent,
@@ -94,7 +98,11 @@ const mapConfig: YaConfig = {
     GraphicalReportMedicineComponent,
     PharmacistListComponent,
     PatientlistComponent,
-    AbsenceComponent
+    AbsenceComponent,
+    ViewComplaintsComponent,
+    LoyaltyProgramComponent,
+    PreviousOffersComponent,
+    PurchaseOrderComponent
 
   ],
   imports: [

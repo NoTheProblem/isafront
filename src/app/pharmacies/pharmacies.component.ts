@@ -8,15 +8,6 @@ import {PharmacyModel} from '../model/pharmacy.model';
   styleUrls: ['./pharmacies.component.css']
 })
 export class PharmaciesComponent implements OnInit {
-
-  private pharmacy: Array<PharmacyModel>;
-
-
-  constructor(
-    private pharmacyService: PharmacyService
-  ) {
-  }
-
   public pharmacies: Array<PharmacyModel>;
   term: string;
   order: string;
@@ -25,6 +16,13 @@ export class PharmaciesComponent implements OnInit {
   name: any;
   city: any;
   lowerGrade = 0;
+
+  constructor(
+    private pharmacyService: PharmacyService
+  ) {
+  }
+
+
 
   ngOnInit(): void {
     this.pharmacyService.getAll().subscribe((pharmacyList: Array<PharmacyModel>) => {
@@ -37,7 +35,7 @@ export class PharmaciesComponent implements OnInit {
     this.reverse = !this.reverse;
   }
 
-  search() {
+  search(): void {
     if (this.name === '') {
       this.ngOnInit();
     } else {
@@ -55,7 +53,7 @@ export class PharmaciesComponent implements OnInit {
     }
   }
 
-  filterEvaluationGrade() {
+  filterEvaluationGrade(): void {
     if (this.lowerGrade === 0) {
       this.ngOnInit();
     } else {

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {PromotionModel} from '../model/promotion.model';
 import {PromotionService} from '../services/promotion.service';
+import {TokenStorageService} from '../_services/token-storage.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-promotions',
@@ -17,11 +19,17 @@ export class PromotionsComponent implements OnInit {
   errorMessage = '';
   showError = false;
 
-  constructor(private promotionService: PromotionService
+  constructor(private promotionService: PromotionService,
+              private tokenStorageService: TokenStorageService,
+              private router: Router
   ) {
   }
 
   ngOnInit(): void {
+    if (this.tokenStorageService.permissionForPage('ROLE_ADMIN'))
+    {
+      this.router.navigate(['/error']);
+    }
     this.getAllActivePromotions();
   }
 
@@ -45,13 +53,5 @@ export class PromotionsComponent implements OnInit {
         this.promotions = promotionsList;
       });
   }
-
-  private getAll(): void {
-    this.promotionService.getAll()
-      .subscribe((promotionsList: Array<PromotionModel>) => {
-        this.promotions = promotionsList;
-      });
-  }
-
-
+  
 }

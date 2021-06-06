@@ -3,6 +3,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {OrderFormService} from '../services/order-form.service';
 import {OrderFormModel} from '../model/order-form.model';
 import {BidModel} from '../model/bid.model';
+import {TokenStorageService} from '../_services/token-storage.service';
 
 @Component({
   selector: 'app-orderdetails',
@@ -22,10 +23,16 @@ export class OrderdetailsComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
               private router: Router,
-              private orderFormService: OrderFormService
-  ) { }
+              private orderFormService: OrderFormService,
+              private tokenStorageService: TokenStorageService
+  ) {
+  }
 
   ngOnInit(): void {
+    if (this.tokenStorageService.permissionForPage('ROLE_ADMIN'))
+    {
+      this.router.navigate(['/error']);
+    }
     const routeParam = this.route.snapshot.paramMap;
     const orderID = Number(routeParam.get('id'));
     this.orderFormService.getOrder(orderID)

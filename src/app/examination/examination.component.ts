@@ -1,10 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {MedicineService} from '../services/medicine.service';
 import {ExaminationService} from '../services/examination.service';
-import {MedicineModel} from '../model/medicine.model';
 import {ExaminationModel} from '../model/examination.model';
-import {DermatologistService} from '../services/dermatologist.service';
-import {DermatologistModel} from '../model/dermatologist.model';
 
 @Component({
   selector: 'app-examination',

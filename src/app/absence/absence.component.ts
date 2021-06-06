@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AbsenceModel} from '../model/absence.model';
 import {AbsenceService} from '../services/absence.service';
+import {TokenStorageService} from '../_services/token-storage.service';
 
 @Component({
   selector: 'app-absence',
@@ -11,19 +12,22 @@ import {AbsenceService} from '../services/absence.service';
 export class AbsenceComponent implements OnInit {
   private absenceID: number;
   public absence: AbsenceModel;
-  isShown = true;
   isDeclined = false;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private absenceService: AbsenceService
+    private absenceService: AbsenceService,
+    private tokenStorageService: TokenStorageService
   ) { }
 
   ngOnInit(): void {
+    this.tokenStorageService.getUserType();
+    if (this.tokenStorageService.getUserType() !== 'ROLE_ADMIN' || this.tokenStorageService.getUserType() !== 'ROLE_SYSADMIN') {
+      this.router.navigate(['/error']);
+    }
     const routeParam = this.route.snapshot.paramMap;
     this.absenceID = Number(routeParam.get('id'));
-    console.log(this.absenceID);
     this.absenceService.getAbsenceByID(this.absenceID).subscribe((ab: AbsenceModel) => {
       this.absence = ab;
     });

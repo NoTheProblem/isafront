@@ -2,10 +2,8 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {AbsenceModel} from '../model/absence.model';
 import {Observable} from 'rxjs';
-import {Toast, ToastrService} from 'ngx-toastr';
+import {ToastrService} from 'ngx-toastr';
 import {Constants} from './constants';
-
-
 
 @Injectable()
 export class AbsenceService {

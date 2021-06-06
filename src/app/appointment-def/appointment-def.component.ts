@@ -7,6 +7,7 @@ import {TokenStorageService} from '../_services/token-storage.service';
 import {ExaminationService} from '../services/examination.service';
 import {AbsenceModel} from '../model/absence.model';
 import {AbsenceService} from '../services/absence.service';
+import {Router} from '@angular/router';
 
 
 @Component({
@@ -15,35 +16,37 @@ import {AbsenceService} from '../services/absence.service';
   styleUrls: ['./appointment-def.component.css']
 })
 export class AppointmentDefComponent implements OnInit {
-  private dermatoligists: Array<DermatologistModel>;
-  private derma: DermatologistModel;
-  private workingHours: WorkingHoursModel;
-  private examinations: Array<ExaminationModel> = new Array<ExaminationModel>();
-  private examinationsBackUp: Array<ExaminationModel> = new Array<ExaminationModel>();
+  dermatoligists: Array<DermatologistModel>;
+  derma: DermatologistModel;
+  workingHours: WorkingHoursModel;
+  examinations: Array<ExaminationModel> = new Array<ExaminationModel>();
   private examination: ExaminationModel;
-  private examinationDateInput: Date;
+  examinationDateInput: Date;
   private wd = '';
   public absences: Array<AbsenceModel>;
-
-
   showWorkDayError = false;
   show = true;
   showAppointments = false;
   showMake = false;
   form: any = {};
-  private x: Date;
   private y: Date;
   showNoAbsence = false;
   showAbsence = false;
 
 
   constructor(private appointmentService: AppointmentService,
-              private tokenStorageService: TokenStorageService,
               private absenceService: AbsenceService,
-              private examinationService: ExaminationService
-  ) { }
+              private examinationService: ExaminationService,
+              private tokenStorageService: TokenStorageService,
+              private router: Router
+  ) {
+  }
 
   ngOnInit(): void {
+    if (this.tokenStorageService.permissionForPage('ROLE_ADMIN'))
+    {
+      this.router.navigate(['/error']);
+    }
     this.appointmentService.getDermaForPhaAdmin().subscribe((dermatoligists: Array<DermatologistModel>) => {
       this.dermatoligists = dermatoligists;
     });

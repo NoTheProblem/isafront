@@ -7,7 +7,8 @@ import {DermatologistModel} from '../model/dermatologist.model';
 import {PharmacistModel} from '../model/pharmacist.model';
 import {WorkingHoursModel} from '../model/workingHours.model';
 import {WorkingHoursPharmacist} from '../model/workingHoursPharmacist';
-import {newArray} from '@angular/compiler/src/util';
+import {TokenStorageService} from '../_services/token-storage.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-pharmacy-employees',
@@ -47,9 +48,17 @@ export class PharmacyEmployeesComponent implements OnInit {
 
   constructor(
     private employeeService: EmployeeService,
-    private pharmacyService: PharmacyService) { }
+    private pharmacyService: PharmacyService,
+    private tokenStorageService: TokenStorageService,
+    private router: Router
+  ) {
+  }
 
   ngOnInit(): void {
+    if (this.tokenStorageService.permissionForPage('ROLE_ADMIN'))
+    {
+      this.router.navigate(['/error']);
+    }
     this.pharmacyService.getPharmacyByAdmin().subscribe((pharmacy: PharmacyModel) => {
       this.pharmacy = pharmacy;
     });

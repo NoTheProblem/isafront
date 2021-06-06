@@ -2,7 +2,6 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {UserModel} from '../model/user.model';
-import {PromotionModel} from '../model/promotion.model';
 import {ToastrService} from 'ngx-toastr';
 import {PasswordChangerModel} from '../model/passwordChanger.model';
 import {Constants} from './constants';
@@ -28,7 +27,7 @@ export class UserProfileService {
         this.toast.success(`Profil azuriran!`);
       },
       (error => {
-        this.toast.error(`Doslo je do greske`);
+        this.toast.error(`Doslo je do greske `);
       })
     );
   }
@@ -39,7 +38,7 @@ export class UserProfileService {
         this.toast.success(`Sifra azurirana!`);
       },
       (error => {
-        this.toast.error(`Doslo je do greske`);
+        this.toast.error(`Doslo je do greske `);
       })
     );
   }

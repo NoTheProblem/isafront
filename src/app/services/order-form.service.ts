@@ -20,7 +20,7 @@ export class OrderFormService {
         this.toast.success(`Dodata nova narudzbenica!`);
       },
       (error => {
-        this.toast.error(`Doslo je do greske`);
+        this.toast.error(`Doslo je do greske `);
       })
     );
   }
@@ -31,7 +31,7 @@ export class OrderFormService {
         this.toast.success(`Porudzbenica je obrisana!`);
       },
       (error => {
-        this.toast.error(`Doslo je do greske`);
+        this.toast.error(`Doslo je do greske `);
       })
     );
   }
@@ -58,7 +58,7 @@ export class OrderFormService {
         this.toast.success(`Porudzbenica je potvrdjena!`);
       },
       (error => {
-        this.toast.error(`Doslo je do greske!`);
+        this.toast.error(`Doslo je do greske! `);
       })
     );
   }
@@ -69,7 +69,7 @@ export class OrderFormService {
         this.toast.success(`Porudzbenica je azurirana!`);
       },
       (error => {
-        this.toast.error(`Doslo je do greske!`);
+        this.toast.error(`Doslo je do greske! `);
       })
     );
   }

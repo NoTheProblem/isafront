@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {TokenStorageService} from '../_services/token-storage.service';
-import {AuthService} from '../_services/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -9,11 +8,8 @@ import {AuthService} from '../_services/auth.service';
 })
 export class HeaderComponent implements OnInit {
   isLoggedIn = false;
-  showSYSADMIN = false;
   showADMIN = false;
   showUSER = false;
-  showDerma = false;
-  showPharma = false;
   showSupplier = false;
   username: string;
   role: string;
@@ -24,7 +20,6 @@ export class HeaderComponent implements OnInit {
     this.isLoggedIn = !!this.tokenStorageService.getToken();
 
     if (this.isLoggedIn) {
-      const user = this.tokenStorageService.getUser();
       this.role = this.tokenStorageService.getUserType();
       this.username = this.tokenStorageService.getUsername();
     }

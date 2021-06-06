@@ -80,7 +80,7 @@ export class EmployeeService {
         this.toast.success(`Dermatolog je dodat.`);
       },
       (error => {
-        this.toast.error(`Dermatolog nije dodat.`);
+        this.toast.error(`Dermatolog nije dodat. `);
       })
     );
   }
